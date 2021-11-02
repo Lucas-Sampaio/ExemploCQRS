@@ -20,6 +20,8 @@ namespace Domain.SendWork
                 _Id = value;
             }
         }
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdateAt { get; set; }
 
         #region Comparacao
 
