@@ -8,6 +8,9 @@ namespace Domain.PessoaAggregate
 {
     public class Pessoa : Entity, IAggregateRoot
     {
+        //EF
+        protected Pessoa() { }
+       
         public Pessoa(string nome, string cpf, DateTime dataNascimento)
         {
             Nome = nome;

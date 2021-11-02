@@ -13,7 +13,7 @@ namespace Infrastructure.EntityConfigurations
             builder.HasKey(c => c.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd().IsRequired();
             builder.Property(x => x.Nome).IsRequired();
-            builder.Property(x => x.DataNascimento);
+            builder.Property(x => x.DataNascimento).IsRequired();
             builder.OwnsOne(x => x.Cpf, e =>
             {
                 e.Property(x => x.Numero).IsRequired().HasMaxLength(11);

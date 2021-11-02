@@ -4,10 +4,9 @@ namespace Domain.PessoaAggregate
 {
     public class Endereco : Entity
     {
-        public Endereco()
-        {
-
-        }
+        //EF
+        protected Endereco() { }
+       
         public Endereco(string logradouro, string numero, string cep,string bairro ,string cidade, string estado)
         {
             Logradouro = logradouro;
