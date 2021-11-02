@@ -1,4 +1,4 @@
-﻿using Domain.SendWork;
+﻿using Domain.SeedWork;
 
 namespace Domain.PessoaAggregate
 {

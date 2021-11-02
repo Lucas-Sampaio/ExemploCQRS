@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Domain.SendWork
+namespace Domain.SeedWork
 {
     /// <summary>
     /// Representa uma entidade que sera persistida no banco

@@ -1,5 +1,5 @@
 ﻿using Domain.PessoaAggregate;
-using Domain.SendWork;
+using Domain.SeedWork;
 
 namespace Infrastructure.Repositories
 {

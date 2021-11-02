@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Domain.SendWork
+namespace Domain.SeedWork
 {
     public interface IUnitOfWork : IDisposable
     {
