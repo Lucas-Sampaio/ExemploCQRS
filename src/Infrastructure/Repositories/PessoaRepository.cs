@@ -1,5 +1,8 @@
 ﻿using Domain.PessoaAggregate;
 using Domain.SeedWork;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
 {
@@ -22,5 +25,9 @@ namespace Infrastructure.Repositories
             return _context.Update(pessoa).Entity;
         }
 
+        public bool Verificar(Expression<Func<Pessoa, bool>> expression)
+        {
+            return _context.Pessoas.Any(expression);
+        }
     }
 }
