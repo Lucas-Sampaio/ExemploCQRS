@@ -19,9 +19,16 @@ namespace API.Controllers
         public async Task<IActionResult> Post(AdicionarPessoaCommand pessoaCommand)
         {
             var response = await _mediator.EnviarComando(pessoaCommand);
-
+            if (!response.IsValid) return BadRequest(response);
             return Created("", response);
         }
 
+        [HttpPut("")]
+        public async Task<IActionResult> Put(AtualizarPessoaCommand pessoaCommand)
+        {
+            var response = await _mediator.EnviarComando(pessoaCommand);
+            if (!response.IsValid) return BadRequest(response);
+            return Created("", response);
+        }
     }
 }

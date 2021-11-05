@@ -2,7 +2,6 @@
 using Core.Communication.Mediator;
 using Domain.PessoaAggregate;
 using FluentValidation.Results;
-using Infrastructure;
 using Infrastructure.Repositories;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,13 +17,10 @@ namespace API.Configuration
 
             //commands
             services.AddScoped<IRequestHandler<AdicionarPessoaCommand, ValidationResult>, PessoaCommandHandler>();
+            services.AddScoped<IRequestHandler<AtualizarPessoaCommand, ValidationResult>, PessoaCommandHandler>();
 
             //repositorios
             services.AddScoped<IPessoaRepository, PessoaRepository>();
-
-            //EF
-            //services.AddScoped<ProjetoContext>();
-
         }
     }
 }

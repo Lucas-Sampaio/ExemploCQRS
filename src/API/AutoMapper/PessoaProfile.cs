@@ -9,6 +9,7 @@ namespace API.AutoMapper
         public PessoaProfile()
         {
             CreateMap<AdicionarPessoaCommand, Pessoa>();
+            CreateMap<AtualizarPessoaCommand, Pessoa>();
         }
     }
 }
