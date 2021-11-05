@@ -29,7 +29,7 @@ namespace API.Application.Commands.PessoaCommand
 
             var pessoa = _mapper.Map<Pessoa>(request);
             _pessoaRepository.Adicionar(pessoa);
-            var sucesso = await _pessoaRepository.UnitOfWork.Commit();
+            _ = await _pessoaRepository.UnitOfWork.Commit();
             return request.ValidationResult;
         }
 
@@ -45,7 +45,7 @@ namespace API.Application.Commands.PessoaCommand
 
             var pessoa = _mapper.Map<Pessoa>(request);
             _pessoaRepository.Atualizar(pessoa);
-            var sucesso = await _pessoaRepository.UnitOfWork.Commit();
+            _ = await _pessoaRepository.UnitOfWork.Commit();
             return request.ValidationResult;
         }
     }
