@@ -6,6 +6,13 @@ namespace Domain.PessoaAggregate
 {
     public interface IPessoaRepository : IRepository<Pessoa>
     {
+        /// <summary>
+        /// Obtem uma pessoa pelo id
+        /// </summary>
+        /// <param name="id">Id da pessoa</param>
+        /// <param name="props">Nomes das propriedades de navegação a serem buscadas</param>
+        /// <returns></returns>
+        Pessoa ObterPorId(int id, params string[] props);
         Pessoa Adicionar(Pessoa pessoa);
         Pessoa Atualizar(Pessoa pessoa);
         /// <summary>
