@@ -16,19 +16,45 @@ namespace API.Controllers
             _mediator = mediator;
         }
         [HttpPost("")]
-        public async Task<IActionResult> Post(AdicionarPessoaCommand pessoaCommand)
+        public async Task<IActionResult> Post(AdicionarPessoaCommand command)
         {
-            var response = await _mediator.EnviarComando(pessoaCommand);
+            var response = await _mediator.EnviarComando(command);
             if (!response.IsValid) return BadRequest(response);
             return Created("", response);
         }
 
         [HttpPut("")]
-        public async Task<IActionResult> Put(AtualizarPessoaCommand pessoaCommand)
+        public async Task<IActionResult> Put(AtualizarPessoaCommand command)
         {
-            var response = await _mediator.EnviarComando(pessoaCommand);
+            var response = await _mediator.EnviarComando(command);
             if (!response.IsValid) return BadRequest(response);
             return Created("", response);
         }
+
+        [HttpPost("endereco")]
+        public async Task<IActionResult> PostEndereco(AdicionarEnderecoPessoaCommand command)
+        {
+            var response = await _mediator.EnviarComando(command);
+            if (!response.IsValid) return BadRequest(response);
+            return Created("", response);
+        }
+
+        [HttpPut("endereco")]
+        public async Task<IActionResult> PutEndereco(AtualizarPessoaCommand command)
+        {
+            var response = await _mediator.EnviarComando(command);
+            if (!response.IsValid) return BadRequest(response);
+            return Created("", response);
+        }
+
+        [HttpDelete("{id}/endereco/{enderecoId}")]
+        public async Task<IActionResult> DeleteEndereco(int id, int enderecoId)
+        {
+            var command = new RemoverEnderecoPessoaCommand(id, enderecoId);
+            var response = await _mediator.EnviarComando(command);
+            if (!response.IsValid) return BadRequest(response);
+            return Created("", response);
+        }
+
     }
 }

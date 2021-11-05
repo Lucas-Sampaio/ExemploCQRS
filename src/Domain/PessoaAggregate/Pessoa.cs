@@ -37,8 +37,9 @@ namespace Domain.PessoaAggregate
         public void AdicionarEndereco(Endereco endereco)
         {
             // ver como validar endereco
-            var enderecoExistente = Enderecos.FirstOrDefault(x => x == endereco);        
-            _enderecos.Add(enderecoExistente);
+            var enderecoExistente = Enderecos.FirstOrDefault(x => x == endereco);
+            if (enderecoExistente != null) AtualizarEndereco(endereco);
+            _enderecos.Add(endereco);
         }
         public void AtualizarEndereco(Endereco endereco)
         {
