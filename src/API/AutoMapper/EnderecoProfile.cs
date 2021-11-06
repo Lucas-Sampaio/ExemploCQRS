@@ -9,7 +9,8 @@ namespace API.AutoMapper
         public EnderecoProfile()
         {
             CreateMap<AdicionarEnderecoPessoaCommand, Endereco>();
-            CreateMap<AtualizarPessoaCommand, Endereco>();
+            CreateMap<AtualizarEnderecoPessoaCommand, Endereco>()
+                .ForMember(dest=> dest.Id, opt => opt.MapFrom(src => src.EnderecoId));
         }
     }
 }

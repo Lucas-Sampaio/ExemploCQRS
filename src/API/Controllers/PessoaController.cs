@@ -40,7 +40,7 @@ namespace API.Controllers
         }
 
         [HttpPut("endereco")]
-        public async Task<IActionResult> PutEndereco(AtualizarPessoaCommand command)
+        public async Task<IActionResult> PutEndereco(AtualizarEnderecoPessoaCommand command)
         {
             var response = await _mediator.EnviarComando(command);
             if (!response.IsValid) return BadRequest(response);
