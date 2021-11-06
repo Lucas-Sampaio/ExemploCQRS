@@ -36,5 +36,11 @@ namespace Infrastructure.Repositories
         {
             return _context.Pessoas.Any(expression);
         }
+
+        public void RemoverEndereco(int enderecoID)
+        {
+            var endereco = _context.Enderecos.Find(enderecoID);
+            _context.Enderecos.Remove(endereco);
+        }
     }
 }

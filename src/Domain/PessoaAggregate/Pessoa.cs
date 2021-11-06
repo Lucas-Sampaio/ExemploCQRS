@@ -49,14 +49,7 @@ namespace Domain.PessoaAggregate
             if (enderecoExistente == null) throw new DomainException("O endereço não pertence ao usuario");
 
             _enderecos.Remove(enderecoExistente);
-            _enderecos.Add(enderecoExistente);
-        }
-        public void RemoverEndereco(Endereco endereco)
-        {
-            var enderecoExistente = Enderecos.FirstOrDefault(x => x == endereco);
-            if (enderecoExistente == null) throw new DomainException("O endereço não pertence ao usuario");
-
-            _enderecos.Remove(enderecoExistente);
-        }
+            _enderecos.Add(endereco);
+        }  
     }
 }

@@ -21,5 +21,6 @@ namespace Domain.PessoaAggregate
         /// <param name="expression"></param>
         /// <returns></returns>
         bool Verificar(Expression<Func<Pessoa, bool>> expression);
+        void RemoverEndereco(int enderecoID);
     }
 }

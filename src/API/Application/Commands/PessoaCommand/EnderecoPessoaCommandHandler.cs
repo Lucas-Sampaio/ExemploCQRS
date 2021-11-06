@@ -28,7 +28,7 @@ namespace API.Application.Commands.PessoaCommand
         public async Task<ValidationResult> Handle(AdicionarEnderecoPessoaCommand request, CancellationToken cancellationToken)
         {
             if (!request.EhValido()) return request.ValidationResult;
-            var pessoa = _pessoaRepository.ObterPorId(request.PessoaId);
+            var pessoa = _pessoaRepository.ObterPorId(request.PessoaId, "Enderecos");
             if (pessoa == null)
             {
                 request.ValidationResult.Errors.Add(new ValidationFailure("", "Essa pessoa não existe no sistema"));
@@ -46,7 +46,7 @@ namespace API.Application.Commands.PessoaCommand
         {
             if (!request.EhValido()) return request.ValidationResult;
 
-            var pessoa = _pessoaRepository.ObterPorId(request.PessoaId);
+            var pessoa = _pessoaRepository.ObterPorId(request.PessoaId, "Enderecos");
             if (pessoa == null)
             {
                 request.ValidationResult.Errors.Add(new ValidationFailure("", "Essa pessoa não existe no sistema"));
@@ -66,18 +66,15 @@ namespace API.Application.Commands.PessoaCommand
         {
             if (!request.EhValido()) return request.ValidationResult;
 
-            var pessoa = _pessoaRepository.ObterPorId(request.PessoaId, "Enderecos");
+            var valido = _pessoaRepository.Verificar(x => x.Id == request.PessoaId && x.Enderecos.Any(y => y.Id == request.EnderecoId));
 
-            if (pessoa == null)
+            if (!valido)
             {
-                request.ValidationResult.Errors.Add(new ValidationFailure("", "Essa pessoa não existe no sistema"));
+                request.ValidationResult.Errors.Add(new ValidationFailure("", "Essa pessoa não existe ou endereço não foi encontrado"));
                 return request.ValidationResult;
             }
 
-            var endereco = pessoa.Enderecos.FirstOrDefault(x => x.Id == request.EnderecoId);
-            pessoa.RemoverEndereco(endereco);
-
-            _pessoaRepository.Atualizar(pessoa);
+            _pessoaRepository.RemoverEndereco(request.EnderecoId);
             _ = await _pessoaRepository.UnitOfWork.Commit();
             return request.ValidationResult;
         }
