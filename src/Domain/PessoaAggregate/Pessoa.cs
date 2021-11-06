@@ -37,8 +37,9 @@ namespace Domain.PessoaAggregate
         public void AdicionarEndereco(Endereco endereco)
         {
             // ver como validar endereco
-            var enderecoExistente = Enderecos.FirstOrDefault(x => x == endereco);        
-            _enderecos.Add(enderecoExistente);
+            var enderecoExistente = Enderecos.FirstOrDefault(x => x == endereco);
+            if (enderecoExistente != null) AtualizarEndereco(endereco);
+            _enderecos.Add(endereco);
         }
         public void AtualizarEndereco(Endereco endereco)
         {
@@ -48,14 +49,7 @@ namespace Domain.PessoaAggregate
             if (enderecoExistente == null) throw new DomainException("O endereço não pertence ao usuario");
 
             _enderecos.Remove(enderecoExistente);
-            _enderecos.Add(enderecoExistente);
-        }
-        public void RemoverEndereco(Endereco endereco)
-        {
-            var enderecoExistente = Enderecos.FirstOrDefault(x => x == endereco);
-            if (enderecoExistente == null) throw new DomainException("O endereço não pertence ao usuario");
-
-            _enderecos.Remove(enderecoExistente);
-        }
+            _enderecos.Add(endereco);
+        }  
     }
 }
