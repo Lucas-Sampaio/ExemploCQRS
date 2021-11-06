@@ -1,20 +1,27 @@
 ﻿using Domain.Exceptions;
 using Domain.PessoaAggregate;
-using System;
 using System.Linq;
 using Xunit;
 
 namespace Tests.TestesUnidade.DomainTestes
 {
+    [Collection(nameof(PessoaCollection))]
     public class PessoaTests
     {
-        [Trait("Pessoa","Pessoa trait teste")]
+        //usado para gerar dados que vai ser compartilhado
+        private readonly PessoaTestsFixture _pessoaTestsFixture;
+
+        public PessoaTests(PessoaTestsFixture pessoaTestsFixture)
+        {
+            _pessoaTestsFixture = pessoaTestsFixture;
+        }
+
+        [Trait("Pessoa", "Pessoa trait teste")]
         [Fact(DisplayName = "AdicionarEnderecoValido")]
         public void Pessoa_AdicionarEndereco_DeveInserirUmNovoEndereco()
         {
             //Arrange
-            var dataNascimento = DateTime.Parse("01/01/2020");
-            var pessoa = new Pessoa("jose", "96123219065", dataNascimento);
+            var pessoa = _pessoaTestsFixture.GerarPessoa();
             var endereco = new Endereco("rua 03", "60", "87984848", "bairro teste", "cidade teste", "estado teste");
 
             //Act
@@ -29,8 +36,7 @@ namespace Tests.TestesUnidade.DomainTestes
         public void Pessoa_AtualizarEndereco_DeveAtualizarUmEnderecoExistente()
         {
             //Arrange
-            var dataNascimento = DateTime.Parse("01/01/2020");
-            var pessoa = new Pessoa("jose", "96123219065", dataNascimento);
+            var pessoa = _pessoaTestsFixture.GerarPessoa();
             var endereco = new Endereco("rua 03", "60", "87984848", "bairro teste", "cidade teste", "estado teste");
             var endereco2 = new Endereco("rua 04", "70", "87984849", "bairro teste 2", "cidade teste 2", "estado teste 2");
 
