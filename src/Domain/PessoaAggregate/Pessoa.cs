@@ -20,7 +20,7 @@ namespace Domain.PessoaAggregate
         public string Nome { get; private set; }
         public CPF Cpf { get; private set; }
 
-        private readonly List<Endereco> _enderecos;
+        private readonly List<Endereco> _enderecos = new();
         public IReadOnlyCollection<Endereco> Enderecos => _enderecos;
         public DateTime DataNascimento { get; private set; }
         public int Idade => CalcularIdade();

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Text.RegularExpressions;
+using System.Linq;
 
 namespace Utils
 {
@@ -12,8 +12,7 @@ namespace Utils
         /// <returns></returns>
         public static string ApenasNumeros(this string valor)
         {
-            var resultString = Regex.Match(valor, @"\d+").Value;
-            return resultString;
+            return new string(valor.Where(char.IsDigit).ToArray());
         }
         /// <summary>
         /// converte a string para numero
