@@ -1,6 +1,7 @@
 ﻿using Domain.Exceptions;
 using Domain.PessoaAggregate;
 using System.Linq;
+using Tests.TestesUnidade.Fixtures;
 using Xunit;
 
 namespace Tests.TestesUnidade.DomainTestes

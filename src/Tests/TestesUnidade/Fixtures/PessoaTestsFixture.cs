@@ -2,7 +2,7 @@
 using System;
 using Xunit;
 
-namespace Tests.TestesUnidade.DomainTestes
+namespace Tests.TestesUnidade.Fixtures
 {
     [CollectionDefinition(nameof(PessoaCollection))]
     public class PessoaCollection : ICollectionFixture<PessoaTestsFixture>
