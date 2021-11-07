@@ -37,7 +37,7 @@ namespace API.Application.Commands.PessoaCommand
         {
             if (!request.EhValido()) return request.ValidationResult;
 
-            if (_pessoaRepository.Verificar(x => x.Cpf.Numero == request.Cpf))
+            if (_pessoaRepository.Verificar(x => x.Cpf.Numero == request.Cpf && x.Id != request.Id))
             {
                 request.ValidationResult.Errors.Add(new ValidationFailure("", "Esse cpf já esta em uso"));
                 return request.ValidationResult;
