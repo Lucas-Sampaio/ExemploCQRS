@@ -63,20 +63,39 @@ namespace Tests.TestesUnidade.InfrastructureTestes
 
             //act
             repositorio.Adicionar(pessoa);
-            repositorio.UnitOfWork.Commit();
-
             var endereco = new Endereco("rua 03", "60", "87984848", "bairro teste", "cidade teste", "estado teste");
             pessoa.AdicionarEndereco(endereco);
-            repositorio.Atualizar(pessoa);
             repositorio.UnitOfWork.Commit();
 
             repositorio.RemoverEndereco(endereco.Id);
             repositorio.UnitOfWork.Commit();
 
-            var result = repositorio.Verificar(x => x.Enderecos.Any());
+            var result = repositorio.Verificar(x => x.Enderecos.Any(y => y.Id == endereco.Id));
 
             //Assert
             Assert.False(result);
+        }
+        [Fact(DisplayName = "busca um endereco com Sucesso")]
+        [Trait("Pessoa", "Pessoa Repositorio Tests")]
+        public void PessoaRepository_BuscarEndereco_DeveExecutarComSucesso()
+        {
+            // Arrange
+            var repositorio = _pessoaRepositoryFixture.ObterPessoaRepositorio();
+            var pessoa = _pessoaRepositoryFixture.GerarPessoa();
+
+            //act
+            repositorio.Adicionar(pessoa);
+
+            var endereco = new Endereco("rua 03", "60", "87984848", "bairro teste", "cidade teste", "estado teste");
+            pessoa.AdicionarEndereco(endereco);
+            repositorio.UnitOfWork.Commit();
+
+            var pessoa2 = repositorio.ObterPorId(pessoa.Id, "Enderecos");
+
+            var result = repositorio.Verificar(x => x.Enderecos.Any());
+
+            //Assert
+            Assert.Equal(1, pessoa2.Enderecos.Count);
         }
     }
 }
