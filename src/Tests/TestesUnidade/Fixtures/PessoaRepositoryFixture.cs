@@ -20,7 +20,7 @@ namespace Tests.TestesUnidade.Fixtures
         public PessoaRepository ObterPessoaRepositorio()
         {
             var options = new DbContextOptionsBuilder<ProjetoContext>()
-                .UseInMemoryDatabase(databaseName: "Pessoas").Options;
+                .UseInMemoryDatabase(databaseName: "TesteCqrs").Options;
             var context = new ProjetoContext(options);
             return new PessoaRepository(context);
 
