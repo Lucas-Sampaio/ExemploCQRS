@@ -1,13 +1,13 @@
 ﻿using API.Application.Commands.PessoaCommand;
 using Core.Communication.Mediator;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace API.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    public class PessoaController : ControllerBase
+    public class PessoaController : MainController
     {
         private readonly IMediatorHandler _mediator;
 
@@ -19,32 +19,32 @@ namespace API.Controllers
         public async Task<IActionResult> Post(AdicionarPessoaCommand command)
         {
             var response = await _mediator.EnviarComando(command);
-            if (!response.IsValid) return BadRequest(response);
-            return Created("", response);
+            if (!response.IsValid) AdicionarErroProcessamento(response);
+            return CustomResponse("Pessoa criada com sucesso", StatusCodes.Status201Created);
         }
 
         [HttpPut("")]
         public async Task<IActionResult> Put(AtualizarPessoaCommand command)
         {
             var response = await _mediator.EnviarComando(command);
-            if (!response.IsValid) return BadRequest(response);
-            return Created("", response);
+            if (!response.IsValid) AdicionarErroProcessamento(response);
+            return CustomResponse("Pessoa atualizada com sucesso");
         }
 
         [HttpPost("endereco")]
         public async Task<IActionResult> PostEndereco(AdicionarEnderecoPessoaCommand command)
         {
             var response = await _mediator.EnviarComando(command);
-            if (!response.IsValid) return BadRequest(response);
-            return Created("", response);
+            if (!response.IsValid) AdicionarErroProcessamento(response);
+            return CustomResponse("Endereco criado com sucesso", StatusCodes.Status201Created);
         }
 
         [HttpPut("endereco")]
         public async Task<IActionResult> PutEndereco(AtualizarEnderecoPessoaCommand command)
         {
             var response = await _mediator.EnviarComando(command);
-            if (!response.IsValid) return BadRequest(response);
-            return Created("", response);
+            if (!response.IsValid) AdicionarErroProcessamento(response);
+            return CustomResponse("Endereco atualizado com sucesso");
         }
 
         [HttpDelete("{id}/endereco/{enderecoId}")]
@@ -52,8 +52,8 @@ namespace API.Controllers
         {
             var command = new RemoverEnderecoPessoaCommand(id, enderecoId);
             var response = await _mediator.EnviarComando(command);
-            if (!response.IsValid) return BadRequest(response);
-            return Created("", response);
+            if (!response.IsValid) AdicionarErroProcessamento(response);
+            return CustomResponse("Endereco removido com sucesso");
         }
 
     }
