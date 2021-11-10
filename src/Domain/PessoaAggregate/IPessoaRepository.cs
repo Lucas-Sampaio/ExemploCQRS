@@ -13,8 +13,8 @@ namespace Domain.PessoaAggregate
         /// <param name="props">Nomes das propriedades de navegação a serem buscadas</param>
         /// <returns></returns>
         Pessoa ObterPorId(int id, params string[] props);
-        Pessoa Adicionar(Pessoa pessoa);
-        Pessoa Atualizar(Pessoa pessoa);
+        void Adicionar(Pessoa pessoa);
+        void Atualizar(Pessoa pessoa);
         /// <summary>
         /// Faz uma consulta no banco e retorna true se satisfazer a condição
         /// </summary>

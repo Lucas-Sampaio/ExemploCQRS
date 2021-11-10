@@ -50,5 +50,9 @@ namespace Domain.PessoaAggregate
             digito = digito + resto.ToString();
             return cpf.EndsWith(digito);
         }
+        public override string ToString()
+        {
+            return this.Numero;
+        }
     }
 }

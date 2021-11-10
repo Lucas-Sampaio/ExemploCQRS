@@ -1,5 +1,7 @@
-﻿using AutoMapper;
+﻿using API.Application.Events.PessoaEvent;
+using AutoMapper;
 using Core.Communication.Mediator;
+using Core.Messages;
 using Domain.PessoaAggregate;
 using FluentValidation.Results;
 using MediatR;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace API.Application.Commands.PessoaCommand
 {
-    public class EnderecoPessoaCommandHandler :
+    public class EnderecoPessoaCommandHandler : CommandHandler,
         IRequestHandler<AdicionarEnderecoPessoaCommand, ValidationResult>,
         IRequestHandler<AtualizarEnderecoPessoaCommand, ValidationResult>,
         IRequestHandler<RemoverEnderecoPessoaCommand, ValidationResult>
@@ -18,7 +20,7 @@ namespace API.Application.Commands.PessoaCommand
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IMapper _mapper;
 
-        public EnderecoPessoaCommandHandler(IPessoaRepository pessoaRepository, IMediatorHandler mediatorHandler, IMapper mapper)
+        public EnderecoPessoaCommandHandler(IPessoaRepository pessoaRepository, IMediatorHandler mediatorHandler, IMapper mapper) : base(mediatorHandler)
         {
             _pessoaRepository = pessoaRepository;
             _mediatorHandler = mediatorHandler;
@@ -39,6 +41,12 @@ namespace API.Application.Commands.PessoaCommand
             pessoa.AdicionarEndereco(endereco);
             _pessoaRepository.Atualizar(pessoa);
             _ = await _pessoaRepository.UnitOfWork.Commit();
+
+            //evento sera publicado caso salve com sucesso
+            var pessoaEvent = new PessoaAtualizadaEvent(pessoa.Id);
+            AdicionarEvento(pessoaEvent);
+            await PublicarEventos();
+
             return request.ValidationResult;
         }
 
@@ -59,6 +67,12 @@ namespace API.Application.Commands.PessoaCommand
 
             _pessoaRepository.Atualizar(pessoa);
             _ = await _pessoaRepository.UnitOfWork.Commit();
+
+            //evento sera publicado caso salve com sucesso
+            var pessoaEvent = new PessoaAtualizadaEvent(pessoa.Id);
+            AdicionarEvento(pessoaEvent);
+            await PublicarEventos();
+
             return request.ValidationResult;
         }
 
@@ -76,6 +90,12 @@ namespace API.Application.Commands.PessoaCommand
 
             _pessoaRepository.RemoverEndereco(request.EnderecoId);
             _ = await _pessoaRepository.UnitOfWork.Commit();
+
+            //evento sera publicado caso salve com sucesso
+            var pessoaEvent = new PessoaAtualizadaEvent(request.PessoaId);
+            AdicionarEvento(pessoaEvent);
+            await PublicarEventos();
+
             return request.ValidationResult;
         }
     }
