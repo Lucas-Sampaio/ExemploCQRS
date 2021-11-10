@@ -17,13 +17,11 @@ namespace API.Application.Commands.PessoaCommand
         IRequestHandler<RemoverEnderecoPessoaCommand, ValidationResult>
     {
         private readonly IPessoaRepository _pessoaRepository;
-        private readonly IMediatorHandler _mediatorHandler;
         private readonly IMapper _mapper;
 
         public EnderecoPessoaCommandHandler(IPessoaRepository pessoaRepository, IMediatorHandler mediatorHandler, IMapper mapper) : base(mediatorHandler)
         {
             _pessoaRepository = pessoaRepository;
-            _mediatorHandler = mediatorHandler;
             _mapper = mapper;
         }
 

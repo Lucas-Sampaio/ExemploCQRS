@@ -10,10 +10,10 @@ namespace Core.Messages
     public class CommandHandler
     {
         protected ValidationResult ValidationResult;
-        protected readonly IMediatorHandler _mediatorHandler;
+        protected readonly IMediatorHandler MediatorHandler;
         protected CommandHandler(IMediatorHandler mediatorHandler = null)
         {
-            _mediatorHandler = mediatorHandler;
+            MediatorHandler = mediatorHandler;
             ValidationResult = new ValidationResult();
         }
         protected void AdicionarErro(string mensagem)
@@ -41,14 +41,14 @@ namespace Core.Messages
         }
         public async Task PublicarEventos()
         {
-            if (_mediatorHandler == null)
-                throw new ArgumentNullException(nameof(_mediatorHandler), "mediatorHandler não pode ser nulo");
+            if (MediatorHandler == null)
+                throw new ArgumentNullException(nameof(MediatorHandler), "mediatorHandler não pode ser nulo");
           
             var tasks = Notificacoes
                 .Select(async (domainEvent) =>
                 {
                     Console.WriteLine("Entrou no evento");
-                    await _mediatorHandler.PublicarEvento(domainEvent);
+                    await MediatorHandler.PublicarEvento(domainEvent);
                 });
 
             await Task.WhenAll(tasks);
