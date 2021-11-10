@@ -11,6 +11,7 @@ namespace API.AutoMapper
             CreateMap<AdicionarEnderecoPessoaCommand, Endereco>();
             CreateMap<AtualizarEnderecoPessoaCommand, Endereco>()
                 .ForMember(dest=> dest.Id, opt => opt.MapFrom(src => src.EnderecoId));
+            CreateMap<Endereco, EnderecoDocument>();
         }
     }
 }

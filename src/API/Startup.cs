@@ -21,7 +21,7 @@ namespace API
         {
             services.AddApiConfiguration(Configuration);
             services.AddSwaggerConfiguration();
-            services.RegisterServices();
+            services.RegisterServices(Configuration);
             services.AddAutoMapper(typeof(Startup));
             services.AddMediatR(typeof(Startup));
           
