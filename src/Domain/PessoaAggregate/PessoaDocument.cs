@@ -17,9 +17,11 @@ namespace Domain.PessoaAggregate
         public List<EnderecoDocument> Enderecos { get; set; }
         [BsonElement("DataNascimento")]
         public DateTime DataNascimento { get; set; }
+        public int Idade { get; set; }
     }
     public class EnderecoDocument
     {
+        public int Id { get; set; }
         [BsonElement("CEP")]
         public string CEP { get; set; }
         [BsonElement("Numero")]
