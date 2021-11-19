@@ -1,4 +1,5 @@
 ﻿using API.Application.Commands.PessoaCommand;
+using API.Application.Queries;
 using Core.Communication.Mediator;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,11 +11,27 @@ namespace API.Controllers
     public class PessoaController : MainController
     {
         private readonly IMediatorHandler _mediator;
+        private readonly IPessoaQuery _pessoaQuery;
 
-        public PessoaController(IMediatorHandler mediator)
+        public PessoaController(IMediatorHandler mediator, IPessoaQuery pessoaQuery)
         {
             _mediator = mediator;
+            _pessoaQuery = pessoaQuery;
         }
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            var pessoas = await _pessoaQuery.ObterTodos();
+            return CustomResponse(pessoas);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            var pessoa = await _pessoaQuery.ObterPorId(id);
+            return CustomResponse(pessoa);
+        }
+
         [HttpPost("")]
         public async Task<IActionResult> Post(AdicionarPessoaCommand command)
         {
