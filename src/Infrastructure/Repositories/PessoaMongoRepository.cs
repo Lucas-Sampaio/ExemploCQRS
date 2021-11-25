@@ -1,25 +1,17 @@
 ﻿using Domain.PessoaAggregate;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
 {
-    public class PessoaMongoRepository
+    public class PessoaMongoRepository : IPessoaMongoRepository
     {
         private readonly IMongoCollection<PessoaDocument> _pessoas;
-        private const string _pessoaDB = "PessoaDB";
         private const string _pessoaCollection = "Pessoas";
-        public PessoaMongoRepository(string connectionString)
+        public PessoaMongoRepository(IMongoDBContext mongoContext)
         {
-            if (string.IsNullOrEmpty(connectionString))
-                throw new ArgumentNullException(nameof(connectionString), "String de conexão não pode ser vazia");
-
-            var client = new MongoClient(connectionString);
-            var database = client.GetDatabase(_pessoaDB);
-            _pessoas = database.GetCollection<PessoaDocument>(_pessoaCollection);
+            _pessoas = mongoContext.GetCollection<PessoaDocument>(_pessoaCollection);
         }
         public List<PessoaDocument> ObterTodos()
         {
@@ -28,11 +20,6 @@ namespace Infrastructure.Repositories
         public PessoaDocument ObterPorId(int id)
         {
             return _pessoas.Find(pessoa => pessoa.Id == id).SingleOrDefault();
-        }
-        public void teste(Expression<Func<PessoaDocument, bool>> predicate)
-        {
-            var x = _pessoas.AsQueryable().Where(predicate.Compile()).ToList();
-             
         }
         public void Adicionar(PessoaDocument pessoa)
         {
@@ -43,7 +30,7 @@ namespace Infrastructure.Repositories
             var filter = Builders<PessoaDocument>.Filter.Where(_ => _.Id == id);
             _pessoas.ReplaceOne(filter, pessoa);
         }
-        public void Remove(long id)
+        public void Remover(int id)
         {
             var filter = Builders<PessoaDocument>.Filter.Where(_ => _.Id == id);
             var operation = _pessoas.DeleteOne(filter);

@@ -4,6 +4,8 @@ using API.Application.Queries;
 using Core.Communication.Mediator;
 using Domain.PessoaAggregate;
 using FluentValidation.Results;
+using Infrastructure;
+using Infrastructure.Configs;
 using Infrastructure.Repositories;
 using MediatR;
 using Microsoft.Extensions.Configuration;
@@ -32,10 +34,14 @@ namespace API.Configuration
             //queries
             services.AddScoped<IPessoaQuery, PessoaQuery>();
 
+            //IOptions configs
+             services.Configure<MongoConfig>(options => configuration.GetSection(nameof(MongoConfig)).Bind(options));
+
             //repositorios
-            var connection = configuration.GetConnectionString("MongoConnection");
+            services.AddScoped<IMongoDBContext, MongoDbContext>();
+    
             services.AddScoped<IPessoaRepository, PessoaRepository>();
-            services.AddScoped((provider) => new PessoaMongoRepository(connection));
+            services.AddScoped<IPessoaMongoRepository, PessoaMongoRepository>();
         }
     }
 }

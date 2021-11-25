@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Domain.PessoaAggregate;
-using Infrastructure.Repositories;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,10 +10,10 @@ namespace API.Application.Events.PessoaEvent
         INotificationHandler<PessoaAdicionadaEvent>,
         INotificationHandler<PessoaAtualizadaEvent>
     {
-        private readonly PessoaMongoRepository _pessoaRepository;
+        private readonly IPessoaMongoRepository _pessoaRepository;
         private readonly IPessoaRepository _pessoaEfRepository;
         private readonly IMapper _mapper;
-        public PessoaEventHandler(PessoaMongoRepository pessoaRepository, IMapper mapper, IPessoaRepository pessoaEfRepository)
+        public PessoaEventHandler(IPessoaMongoRepository pessoaRepository, IMapper mapper, IPessoaRepository pessoaEfRepository)
         {
             _pessoaRepository = pessoaRepository;
             _mapper = mapper;

@@ -13,7 +13,7 @@ namespace Domain.PessoaAggregate
         public string Nome { get; set; }
         [BsonElement("Cpf")]
         public string Cpf { get; set; }
-        [BsonElement("Endereco")]
+        [BsonElement("Enderecos")]
         public List<EnderecoDocument> Enderecos { get; set; }
         [BsonElement("DataNascimento")]
         public DateTime DataNascimento { get; set; }

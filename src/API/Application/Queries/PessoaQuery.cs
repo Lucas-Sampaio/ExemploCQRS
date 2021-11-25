@@ -1,6 +1,6 @@
 ﻿using API.Application.DTOs;
 using AutoMapper;
-using Infrastructure.Repositories;
+using Domain.PessoaAggregate;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,10 +14,10 @@ namespace API.Application.Queries
     }
     public class PessoaQuery : IPessoaQuery
     {
-        private readonly PessoaMongoRepository _pessoaRepository;
+        private readonly IPessoaMongoRepository _pessoaRepository;
 
         private readonly IMapper _mapper;
-        public PessoaQuery(PessoaMongoRepository pessoaRepository, IMapper mapper)
+        public PessoaQuery(IPessoaMongoRepository pessoaRepository, IMapper mapper)
         {
             _pessoaRepository = pessoaRepository;
             _mapper = mapper;
