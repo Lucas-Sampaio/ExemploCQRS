@@ -25,7 +25,7 @@ namespace Tests.TestesUnidade.InfrastructureTestes
             //act
             repositorio.Adicionar(pessoa);
             repositorio.UnitOfWork.Commit();
-            var result = repositorio.Verificar(x => x.Id > 0);
+            var result = repositorio.Verificar(x => x.Id == pessoa.Id);
 
             //Assert
             Assert.True(result);
@@ -48,7 +48,7 @@ namespace Tests.TestesUnidade.InfrastructureTestes
             repositorio.Atualizar(pessoa);
             repositorio.UnitOfWork.Commit();
 
-            var result = repositorio.Verificar(x => x.Enderecos.Any());
+            var result = repositorio.Verificar(x => x.Id == pessoa.Id && x.Enderecos.Any());
 
             //Assert
             Assert.True(result);
@@ -91,8 +91,6 @@ namespace Tests.TestesUnidade.InfrastructureTestes
             repositorio.UnitOfWork.Commit();
 
             var pessoa2 = repositorio.ObterPorId(pessoa.Id, "Enderecos");
-
-            var result = repositorio.Verificar(x => x.Enderecos.Any());
 
             //Assert
             Assert.Equal(1, pessoa2.Enderecos.Count);

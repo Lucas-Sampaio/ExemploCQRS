@@ -12,8 +12,7 @@ namespace Tests.TestesUnidade.Fixtures
     {
     }
     /// <summary>
-    /// Cria uma pessoa repositoriio fake
-    /// com dados na memoria
+    /// Cria um repositorio de pessoas salvando na memoria
     /// </summary>
     public class PessoaRepositoryFixture
     {

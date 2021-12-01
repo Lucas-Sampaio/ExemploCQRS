@@ -21,15 +21,14 @@ namespace Infrastructure.Repositories
             return _context.Pessoas.DynamicInclude(props).SingleOrDefault(x => x.Id == id);
         }
 
-        public Pessoa Adicionar(Pessoa pessoa)
+        public void Adicionar(Pessoa pessoa)
         {
-            var entidade = _context.Pessoas.Add(pessoa).Entity;
-            return entidade;
+            _context.Pessoas.Add(pessoa);
         }
 
-        public Pessoa Atualizar(Pessoa pessoa)
+        public void Atualizar(Pessoa pessoa)
         {
-            return _context.Update(pessoa).Entity;
+            _context.Update(pessoa);
         }
 
         public bool Verificar(Expression<Func<Pessoa, bool>> expression)
