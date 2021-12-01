@@ -1,4 +1,5 @@
-﻿using Infrastructure;
+﻿using API.Filters;
+using Infrastructure;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +17,10 @@ namespace API.Configuration
 
             services.AddDbContext<ProjetoContext>(options => options.UseSqlServer(connection));
 
-            services.AddControllers();
+            services.AddControllers(options =>
+            {
+                options.Filters.Add(typeof(HttpGlobalExceptionFilter));
+            });
         }
         public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
         {
