@@ -22,6 +22,7 @@ namespace API
             services.AddApiConfiguration(Configuration);
             services.AddSwaggerConfiguration();
             services.RegisterServices(Configuration);
+            services.AddCustomHealthChecks(Configuration);
             services.AddAutoMapper(typeof(Startup));
             services.AddMediatR(typeof(Startup));
           
@@ -31,6 +32,7 @@ namespace API
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseApiConfiguration(env);
+            app.UseCustomHealthCheckConfiguration();
             app.UseSwaggerConfiguration();
         }
     }
