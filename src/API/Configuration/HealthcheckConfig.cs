@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace API.Configuration
 {
@@ -10,13 +11,22 @@ namespace API.Configuration
     {
         public static void AddCustomHealthChecks(this IServiceCollection services, IConfiguration configuration)
         {
-            var connection = configuration.GetConnectionString("SQLConnection");
+            var connectionSql = configuration.GetConnectionString("SQLConnection");
+            var connectionMongo = configuration["MongoConfig:Connection"];
 
             services.AddHealthChecks()
-                .AddSqlServer(connection, name: "BancoSQL");
+                .AddSqlServer(connectionSql, name: "BancoSQL",
+                tags: new string[] { "db", "sql", "sqlserver", "baseEscrita" }, timeout: TimeSpan.FromSeconds(10))
+                .AddMongoDb(connectionMongo, name: "MongoDB",
+                tags: new string[] { "mongo", "nosql", "baseLeitura" });
 
-            services.AddHealthChecksUI()
-                .AddSqlServerStorage(connection);
+
+            services.AddHealthChecksUI(setup =>
+            {
+                setup.SetEvaluationTimeInSeconds(5); //tempo para consultar a api
+                setup.SetApiMaxActiveRequests(3); //maximo de tentativas ativas
+                setup.MaximumHistoryEntriesPerEndpoint(50); //maximo de logs de estado
+            }).AddInMemoryStorage();
 
 
         }
@@ -29,7 +39,14 @@ namespace API.Configuration
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
             });
 
-            app.UseHealthChecksUI();
+            app.UseHealthChecksUI(options => 
+            {
+                options.UIPath = "/api/hc-ui";
+                options.ResourcesPath = $"{options.UIPath}/resources";
+                options.UseRelativeApiPath = false;
+                options.UseRelativeResourcesPath = false;
+                options.UseRelativeWebhookPath = false;
+            });
         }
 
     }
