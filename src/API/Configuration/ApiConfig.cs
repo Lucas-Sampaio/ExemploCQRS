@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace API.Configuration
 {
@@ -15,7 +16,11 @@ namespace API.Configuration
         {
             var connection = configuration.GetConnectionString("SQLConnection");
 
-            services.AddDbContext<ProjetoContext>(options => options.UseSqlServer(connection));
+            services.AddDbContext<ProjetoContext>(options =>
+            {
+                options
+                .UseSqlServer(connection, config => config.EnableRetryOnFailure(3, TimeSpan.FromSeconds(10), null));
+            });
 
             services.AddControllers(options =>
             {
