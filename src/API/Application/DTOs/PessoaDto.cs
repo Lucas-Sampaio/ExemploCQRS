@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Utils;
 
 namespace API.Application.DTOs
 {
@@ -11,6 +12,6 @@ namespace API.Application.DTOs
 
         public List<EnderecoDto> Enderecos { get; set; }
         public DateTime DataNascimento { get; set; }
-        public int Idade { get; set; }
+        public int Idade => DataNascimento.CalcularIdade();
     }
 }
