@@ -17,9 +17,9 @@ e uma [CommandStack](https://github.com/Lucas-Sampaio/ExemploCQRS/tree/master/sr
 
 ### 🛠 Como usar
  1. Baixe o projeto
- 2. rode o comando no powershell na pasta [docker](https://github.com/Lucas-Sampaio/ExemploCQRS/tree/master/Docker) -> docker-compose -f cqrs-compose.yml up -d
+ 2. rode o comando no powershell na pasta [docker](https://github.com/Lucas-Sampaio/ExemploCQRS/tree/master/Docker) -> ```docker-compose -f cqrs-compose.yml up -d```
  isso irá subir os serviços necessario pro projeto.
- 3. Com o projeto aberto atualize a base rode -> update-database -Context ProjetoContext 
+ 3. Com o projeto aberto atualize a base rode ->```update-database -Context ProjetoContext``` 
   isso irá criar a base no sql server
  4. O projeto gera a documentação da api automatica pelo swagger mas pode baixar a [collection](https://github.com/Lucas-Sampaio/ExemploCQRS/blob/master/Assets/TesteCqrs.postman_collection) do postman se preferir
 
