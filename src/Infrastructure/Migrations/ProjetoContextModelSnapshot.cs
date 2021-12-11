@@ -114,6 +114,10 @@ namespace Infrastructure.Migrations
 
                             b1.HasKey("PessoaId");
 
+                            b1.HasIndex("Numero")
+                                .IsUnique()
+                                .HasFilter("[Cpf_Numero] IS NOT NULL");
+
                             b1.ToTable("Pessoas");
 
                             b1.WithOwner()

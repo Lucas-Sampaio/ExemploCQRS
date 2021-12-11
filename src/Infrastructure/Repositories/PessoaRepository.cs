@@ -1,5 +1,9 @@
 ﻿using Domain.PessoaAggregate;
 using Domain.SeedWork;
+using Infrastructure.Extensions;
+using System;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace Infrastructure.Repositories
 {
@@ -11,16 +15,31 @@ namespace Infrastructure.Repositories
         }
         private readonly ProjetoContext _context;
         public IUnitOfWork UnitOfWork => _context;
-        public Pessoa Adicionar(Pessoa pessoa)
+
+        public Pessoa ObterPorId(int id, params string[] props)
         {
-            var entidade = _context.Pessoas.Add(pessoa).Entity;
-            return entidade;
+            return _context.Pessoas.DynamicInclude(props).SingleOrDefault(x => x.Id == id);
         }
 
-        public Pessoa Atualizar(Pessoa pessoa)
+        public void Adicionar(Pessoa pessoa)
         {
-            return _context.Update(pessoa).Entity;
+            _context.Pessoas.Add(pessoa);
         }
 
+        public void Atualizar(Pessoa pessoa)
+        {
+            _context.Update(pessoa);
+        }
+
+        public bool Verificar(Expression<Func<Pessoa, bool>> expression)
+        {
+            return _context.Pessoas.Any(expression);
+        }
+
+        public void RemoverEndereco(int enderecoID)
+        {
+            var endereco = _context.Enderecos.Find(enderecoID);
+            _context.Enderecos.Remove(endereco);
+        }
     }
 }

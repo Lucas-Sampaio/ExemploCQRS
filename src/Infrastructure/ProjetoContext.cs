@@ -13,6 +13,19 @@ namespace Infrastructure
         public DbSet<Endereco> Enderecos { get; set; }
 
         public ProjetoContext(DbContextOptions<ProjetoContext> options) : base(options) { }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            //usado so em debug para obter erros mais detalhados
+#if DEBUG
+            optionsBuilder.EnableDetailedErrors();
+#endif
+
+            optionsBuilder.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTrackingWithIdentityResolution);
+
+            base.OnConfiguring(optionsBuilder);
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //seta as colunas string pra varchar(100)

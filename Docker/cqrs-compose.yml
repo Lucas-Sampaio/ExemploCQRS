@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+    
+    sql-server:
+        container_name: cqrs-sql-server
+        image: mcr.microsoft.com/mssql/server:2019-latest
+        ports:
+            - 1433:1433
+        volumes: 
+            - todo-mssql-data:/var/lib/mssql
+        environment:
+           ACCEPT_EULA: "Y"
+           SA_PASSWORD: "MeuDB@123"
+    
+    mongo:
+        container_name: cqrs-mongoDb
+        image: mongo:latest
+        restart : always
+        ports:
+            - 27017:27017
+            
+    elasticsearch:
+         container_name: cqrs-elastic
+         image: docker.elastic.co/elasticsearch/elasticsearch:7.16.0
+         ports:
+            - 9200:9200
+         volumes:
+            - elasticsearch-data:/usr/share/elasticsearch/data
+         environment:
+            - xpack.monitoring.enabled=true
+            - xpack.watcher.enabled=false
+            - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+            - discovery.type=single-node
+         networks:
+            - elastic
+    kibana:
+        container_name: cqrs-kibana
+        image: docker.elastic.co/kibana/kibana:7.16.0
+        ports:
+            - 5601:5601
+        depends_on:
+            - elasticsearch
+        environment:
+            - ELASTICSEARCH_URL=http://localhost:9200
+        networks:
+            - elastic
+        
+networks:
+    elastic:
+        driver: bridge
+        
+volumes:
+    todo-mssql-data: 
+    elasticsearch-data:
+    
+           

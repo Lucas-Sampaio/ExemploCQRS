@@ -3,6 +3,7 @@ using Domain.SeedWork;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Utils;
 
 namespace Domain.PessoaAggregate
 {
@@ -20,25 +21,17 @@ namespace Domain.PessoaAggregate
         public string Nome { get; private set; }
         public CPF Cpf { get; private set; }
 
-        private readonly List<Endereco> _enderecos;
+        private readonly List<Endereco> _enderecos = new();
         public IReadOnlyCollection<Endereco> Enderecos => _enderecos;
         public DateTime DataNascimento { get; private set; }
-        public int Idade => CalcularIdade();
+        public int Idade => DataNascimento.CalcularIdade();
 
-        private int CalcularIdade()
-        {
-            var idade = DateTime.Now.Year - DataNascimento.Year;
-
-            if (DateTime.Now.DayOfYear < DataNascimento.DayOfYear)
-                idade--;
-
-            return idade;
-        }
         public void AdicionarEndereco(Endereco endereco)
         {
             // ver como validar endereco
-            var enderecoExistente = Enderecos.FirstOrDefault(x => x == endereco);        
-            _enderecos.Add(enderecoExistente);
+            var enderecoExistente = Enderecos.FirstOrDefault(x => x == endereco);
+            if (enderecoExistente != null) AtualizarEndereco(endereco);
+            _enderecos.Add(endereco);
         }
         public void AtualizarEndereco(Endereco endereco)
         {
@@ -48,14 +41,7 @@ namespace Domain.PessoaAggregate
             if (enderecoExistente == null) throw new DomainException("O endereço não pertence ao usuario");
 
             _enderecos.Remove(enderecoExistente);
-            _enderecos.Add(enderecoExistente);
-        }
-        public void RemoverEndereco(Endereco endereco)
-        {
-            var enderecoExistente = Enderecos.FirstOrDefault(x => x == endereco);
-            if (enderecoExistente == null) throw new DomainException("O endereço não pertence ao usuario");
-
-            _enderecos.Remove(enderecoExistente);
-        }
+            _enderecos.Add(endereco);
+        }  
     }
 }
