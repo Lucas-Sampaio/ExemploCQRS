@@ -27,7 +27,6 @@ e uma [CommandStack](https://github.com/Lucas-Sampaio/ExemploCQRS/tree/master/sr
 
 As seguintes ferramentas foram usadas na construção do projeto:
 
-- [QueryStack](https://github.com/Lucas-Sampaio/ExemploCQRS/tree/master/src/API/Application/Queries)
 - [.Net 5](https://github.com/dotnet)
 - [Ef Core Sql Server](https://github.com/dotnet/efcore)
 - [MongoDBDriver](https://github.com/mongodb/mongo-csharp-driver)
