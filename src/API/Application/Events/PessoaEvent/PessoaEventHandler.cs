@@ -21,12 +21,10 @@ namespace API.Application.Events.PessoaEvent
         }
         public Task Handle(PessoaAdicionadaEvent notification, CancellationToken cancellationToken)
         {
-            var pessoaDocument = _mapper.Map<PessoaDocument>(notification);
             //verifica se não existe e adiciona, 
             //esta chamando o evento 2x n sei o motivo ainda
-            var pessoa = _pessoaRepository.ObterPorId(pessoaDocument.Id);
-            if (pessoa == null)
-                _pessoaRepository.Adicionar(pessoaDocument);
+            var pessoaDocument = _mapper.Map<PessoaDocument>(notification);
+            _pessoaRepository.AdicionarOuAtualizarPessoa(pessoaDocument);
             return Task.CompletedTask;
         }
 
@@ -36,7 +34,7 @@ namespace API.Application.Events.PessoaEvent
             var pessoaDocument = _mapper.Map<PessoaDocument>(pessoa);
             //verifica se não existe e adiciona, 
             //esta chamando o evento 2x n sei o motivo ainda
-            _pessoaRepository.Atualizar(pessoaDocument.Id, pessoaDocument);
+            _pessoaRepository.AdicionarOuAtualizarPessoa(pessoaDocument);
             return Task.CompletedTask;
         }
     }
