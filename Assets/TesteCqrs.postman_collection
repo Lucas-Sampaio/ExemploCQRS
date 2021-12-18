@@ -1,0 +1,191 @@
+{
+	"info": {
+		"_postman_id": "67f8c76d-35df-450d-b59c-ca6f0d2c8103",
+		"name": "TesteInterno",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "CadastrarPessoa",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"he man\",\r\n    \"cpf\": \"769.629.010-03\",\r\n    \"dataNascimento\": \"2000-11-02T21:22:06.658Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44300/api/Pessoa",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Pessoa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AtualizarPessoa",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Id\":1,\r\n    \"nome\": \"He man 3\",\r\n    \"cpf\": \"168.375.040-37\",\r\n    \"dataNascimento\": \"2000-11-02T21:22:06.658Z\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44300/api/Pessoa",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Pessoa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AdicionarEndereco",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"PessoaId\":1, \r\n  \"cep\": \"40315470\",\r\n  \"numero\": \"60\",\r\n  \"logradouro\": \"rua 03 de janeiro\",\r\n  \"bairro\": \"Cabula\",\r\n  \"cidade\": \"Salvador\",\r\n  \"estado\": \"Bahia\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44300/api/Pessoa/endereco",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Pessoa",
+						"endereco"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AtualizarEndereco",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"PessoaId\":15, \r\n  \"EnderecoId\":1,\r\n  \"cep\": \"40315470\",\r\n  \"numero\": \"60\",\r\n  \"logradouro\": \"rua 03 de novembro\",\r\n  \"bairro\": \"Ribeira1\",\r\n  \"cidade\": \"Salvador\",\r\n  \"estado\": \"Bahia\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44300/api/Pessoa/endereco",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Pessoa",
+						"endereco"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RemoverEndereco",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/Pessoa/1/endereco/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Pessoa",
+						"1",
+						"endereco",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObterPessoas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/Pessoa",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Pessoa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ObterPessoaPorId",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44300/api/Pessoa/1",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44300",
+					"path": [
+						"api",
+						"Pessoa",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

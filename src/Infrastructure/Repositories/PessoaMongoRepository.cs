@@ -1,5 +1,6 @@
 ﻿using Domain.PessoaAggregate;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,11 +22,25 @@ namespace Infrastructure.Repositories
         {
             return _pessoas.Find(pessoa => pessoa.Id == id).SingleOrDefault();
         }
-        public void Adicionar(PessoaDocument pessoa)
+        /// <summary>
+        /// Adiciona uma pessoa caso não esteja no mongo ou atualiza ela caso tenha
+        /// </summary>
+        /// <param name="pessoa">pessoa a ser inserida/atualizada</param>
+        /// <param name="id">id da pessoa</param>
+        public void AdicionarOuAtualizarPessoa(PessoaDocument pessoa)
         {
-            _pessoas.InsertOne(pessoa);
+            var id = pessoa.Id;
+            if (id == 0)
+                throw new ArgumentNullException(nameof(id), "Id da pessoa não informada");
+
+            var pessoaDocument = ObterPorId(id);
+            if (pessoaDocument == null)
+                Adicionar(pessoa);
+            else
+                Atualizar(id, pessoa);
         }
-        public void Atualizar(int id, PessoaDocument pessoa)
+        private void Adicionar(PessoaDocument pessoa) => _pessoas.InsertOne(pessoa);
+        private void Atualizar(int id, PessoaDocument pessoa)
         {
             var filter = Builders<PessoaDocument>.Filter.Where(_ => _.Id == id);
             _pessoas.ReplaceOne(filter, pessoa);

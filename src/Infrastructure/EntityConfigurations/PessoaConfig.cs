@@ -16,6 +16,7 @@ namespace Infrastructure.EntityConfigurations
             builder.Property(x => x.DataNascimento).IsRequired();
             builder.OwnsOne(x => x.Cpf, e =>
             {
+                e.HasIndex(x => x.Numero).IsUnique();
                 e.Property(x => x.Numero).IsRequired().HasMaxLength(11);
             });
             builder.HasMany(x => x.Enderecos).WithOne();
