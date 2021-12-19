@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace API
@@ -34,7 +35,12 @@ namespace API
             app.UseApiConfiguration(env);
             app.UseCustomHealthCheckConfiguration();
             app.UseSwaggerConfiguration();
-            SerilogConfig.ConfigureSerilog(Configuration, loggerFactory);
+
+            if (!env.IsEnvironment("Testing"))
+            {
+              
+                SerilogConfig.ConfigureSerilog(Configuration, loggerFactory);
+            }         
         }
     }
 }

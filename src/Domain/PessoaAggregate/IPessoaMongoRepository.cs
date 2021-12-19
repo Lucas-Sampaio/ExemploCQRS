@@ -7,6 +7,7 @@ namespace Domain.PessoaAggregate
         void AdicionarOuAtualizarPessoa(PessoaDocument pessoa);
         void Remover(int id);
         PessoaDocument ObterPorId(int id);
+        PessoaDocument ObterPorCPF(string cpf);
         List<PessoaDocument> ObterTodos();
     }
 }

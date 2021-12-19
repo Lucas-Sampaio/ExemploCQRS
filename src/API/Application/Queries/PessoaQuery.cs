@@ -3,6 +3,7 @@ using AutoMapper;
 using Domain.PessoaAggregate;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Utils;
 
 namespace API.Application.Queries
 {
@@ -16,6 +17,15 @@ namespace API.Application.Queries
             _pessoaRepository = pessoaRepository;
             _mapper = mapper;
         }
+
+        public Task<PessoaDto> ObterPorCPF(string cpf)
+        {
+            cpf = cpf.ApenasNumeros();
+            var pessoa = _pessoaRepository.ObterPorCPF(cpf);
+            var pessoaDto = _mapper.Map<PessoaDto>(pessoa);
+            return Task.FromResult(pessoaDto);
+        }
+
         public Task<PessoaDto> ObterPorId(int id)
         {
             var pessoa = _pessoaRepository.ObterPorId(id);

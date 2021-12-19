@@ -20,7 +20,7 @@ namespace Infrastructure.Repositories
         }
         public PessoaDocument ObterPorId(int id)
         {
-            return _pessoas.Find(pessoa => pessoa.Id == id).SingleOrDefault();
+            return _pessoas.Find(pessoa => pessoa.Id == id).FirstOrDefault();
         }
         /// <summary>
         /// Adiciona uma pessoa caso não esteja no mongo ou atualiza ela caso tenha
@@ -49,6 +49,11 @@ namespace Infrastructure.Repositories
         {
             var filter = Builders<PessoaDocument>.Filter.Where(_ => _.Id == id);
             var operation = _pessoas.DeleteOne(filter);
+        }
+
+        public PessoaDocument ObterPorCPF(string cpf)
+        {
+            return _pessoas.Find(pessoa => pessoa.Cpf == cpf).FirstOrDefault();
         }
     }
 }
