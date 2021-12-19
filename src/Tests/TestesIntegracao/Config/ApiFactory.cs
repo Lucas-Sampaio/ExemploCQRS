@@ -4,11 +4,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Tests.TestesIntegracao.Config
 {
@@ -16,6 +12,8 @@ namespace Tests.TestesIntegracao.Config
     {
         protected override void ConfigureWebHost(IWebHostBuilder builder)
         {
+            builder.UseEnvironment("Testing");
+
             //remove a opçao atual de configuração e seta pra salvar em memoria
             builder.ConfigureServices(services =>
             {
@@ -41,9 +39,10 @@ namespace Tests.TestesIntegracao.Config
                 db.Database.EnsureCreated();
             });
 
+
             //caso tenha um startup especifico para ser usado
             //builder.UseStartup<TStartup>();
-            //builder.UseEnvironment("Testing");
+
         }
     }
 }
