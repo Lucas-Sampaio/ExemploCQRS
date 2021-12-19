@@ -3,6 +3,18 @@
     //objeto de resposta
     public class EnderecoDto
     {
+        public EnderecoDto() { }
+
+        public EnderecoDto(string logradouro, string numero, string cep, string bairro, string cidade, string estado)
+        {
+            Logradouro = logradouro;
+            Numero = numero;
+            CEP = cep;
+            Bairro = bairro;
+            Cidade = cidade;
+            Estado = estado;
+        }
+
         public int Id { get; set; }
         public string CEP { get; set; }
         public string Numero { get; set; }
