@@ -8,6 +8,7 @@ namespace API.Application.Queries
     public interface IPessoaQuery
     {
         Task<PessoaDto> ObterPorId(int id);
+        Task<PessoaDto> ObterPorCPF(string cpf);
         Task<IEnumerable<PessoaDto>> ObterTodos();
     }
 }

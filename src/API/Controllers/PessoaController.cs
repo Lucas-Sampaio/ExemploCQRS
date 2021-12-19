@@ -32,6 +32,13 @@ namespace API.Controllers
             return CustomResponse(pessoa);
         }
 
+        [HttpGet("cpf/{cpf}")]
+        public async Task<IActionResult> Get(string cpf)
+        {
+            var pessoa = await _pessoaQuery.ObterPorCPF(cpf);
+            return CustomResponse(pessoa);
+        }
+
         [HttpPost("")]
         public async Task<IActionResult> Post(AdicionarPessoaCommand command)
         {
