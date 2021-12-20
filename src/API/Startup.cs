@@ -38,7 +38,8 @@ namespace API
             app.UseSwaggerConfiguration();
 
             if (!env.IsEnvironment("Testing"))
-            {          
+            {
+              
                 SerilogConfig.ConfigureSerilog(Configuration, loggerFactory);
             }         
         }
