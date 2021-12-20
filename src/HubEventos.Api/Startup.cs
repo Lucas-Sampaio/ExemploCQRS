@@ -1,13 +1,11 @@
-using API.Configuration;
-using MediatR;
+using HubEventos.Api.Configuration;
+using HubEventos.Api.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 
-namespace API
+namespace HubEventos.Api
 {
     public class Startup
     {
@@ -24,23 +22,15 @@ namespace API
             services.AddApiConfiguration(Configuration);
             services.AddSwaggerConfiguration();
             services.RegisterServices(Configuration);
-            services.AddCustomHealthChecks(Configuration);
             services.AddMessageBusConfiguration(Configuration);
-            services.AddAutoMapper(typeof(Startup));
-            services.AddMediatR(typeof(Startup));
+            services.AddHostedService<ConsumerIntegrationHandler>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseApiConfiguration(env);
-            app.UseCustomHealthCheckConfiguration();
             app.UseSwaggerConfiguration();
-
-            if (!env.IsEnvironment("Testing"))
-            {          
-                SerilogConfig.ConfigureSerilog(Configuration, loggerFactory);
-            }         
         }
     }
 }
