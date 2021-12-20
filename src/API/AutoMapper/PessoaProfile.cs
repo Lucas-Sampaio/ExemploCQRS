@@ -12,7 +12,6 @@ namespace API.AutoMapper
         {
             CreateMap<AdicionarPessoaCommand, Pessoa>();
             CreateMap<AtualizarPessoaCommand, Pessoa>();
-            CreateMap<PessoaAdicionadaEvent, PessoaDocument>();
             CreateMap<Pessoa, PessoaDocument>()
                 .ForMember(dest => dest.Cpf, opt => opt.MapFrom(src => src.Cpf.Numero));
             CreateMap<Pessoa, PessoaDto>();

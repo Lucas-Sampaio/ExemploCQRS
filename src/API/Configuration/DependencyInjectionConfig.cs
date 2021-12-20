@@ -2,6 +2,7 @@
 using API.Application.Events.PessoaEvent;
 using API.Application.Queries;
 using Core.Communication.Mediator;
+using Core.Messages.Integration;
 using Domain.PessoaAggregate;
 using FluentValidation.Results;
 using Infrastructure;
@@ -28,8 +29,7 @@ namespace API.Configuration
             services.AddScoped<IRequestHandler<RemoverEnderecoPessoaCommand, ValidationResult>, EnderecoPessoaCommandHandler>();
 
             //events
-            services.AddScoped<INotificationHandler<PessoaAdicionadaEvent>, PessoaEventHandler>();
-            services.AddScoped<INotificationHandler<PessoaAtualizadaEvent>, PessoaEventHandler>();
+            services.AddScoped<INotificationHandler<PessoaCadastradaIntegrationEvent>, PessoaEventHandler>();
 
             //queries
             services.AddScoped<IPessoaQuery, PessoaQuery>();

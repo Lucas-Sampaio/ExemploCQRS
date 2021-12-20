@@ -20,6 +20,16 @@ services:
         ports:
             - 27017:27017
             
+    rabbitmq:
+        container_name: cqrs-rabbitmq
+        image: rabbitmq:3-management    
+        ports:
+           - 15672:15672
+           - 5672:5672
+        environment:
+            RABBITMQ_DEFAULT_USER: "cqrsguest"
+            RABBITMQ_DEFAULT_PASS: "cqrsguest"        
+            
     elasticsearch:
          container_name: cqrs-elastic
          image: docker.elastic.co/elasticsearch/elasticsearch:7.16.0
