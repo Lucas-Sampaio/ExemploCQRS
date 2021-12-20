@@ -1,7 +1,7 @@
-﻿using API.Application.Events.PessoaEvent;
-using AutoMapper;
+﻿using AutoMapper;
 using Core.Communication.Mediator;
 using Core.Messages;
+using Core.Messages.Integration;
 using Domain.PessoaAggregate;
 using FluentValidation.Results;
 using MediatR;
@@ -34,7 +34,7 @@ namespace API.Application.Commands.PessoaCommand
             _ = await _pessoaRepository.UnitOfWork.Commit();
 
             //evento sera publicado caso salve com sucesso
-            var pessoaEvent = new PessoaCadastrataEvent(pessoa.Id);
+            var pessoaEvent = new PessoaCadastradaIntegrationEvent(pessoa.Id);
 
             AdicionarEvento(pessoaEvent);
             await PublicarEventos();
@@ -53,7 +53,7 @@ namespace API.Application.Commands.PessoaCommand
             _ = await _pessoaRepository.UnitOfWork.Commit();
 
             //evento sera publicado caso salve com sucesso
-            var pessoaEvent = new PessoaCadastrataEvent(pessoa.Id);
+            var pessoaEvent = new PessoaCadastradaIntegrationEvent(pessoa.Id);
 
             AdicionarEvento(pessoaEvent);
             await PublicarEventos();
