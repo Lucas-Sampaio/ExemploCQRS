@@ -25,6 +25,7 @@ namespace API
             services.AddSwaggerConfiguration();
             services.RegisterServices(Configuration);
             services.AddCustomHealthChecks(Configuration);
+            services.AddMessageBusConfiguration(Configuration);
             services.AddAutoMapper(typeof(Startup));
             services.AddMediatR(typeof(Startup));
         }

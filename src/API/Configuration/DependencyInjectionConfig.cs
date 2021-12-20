@@ -28,8 +28,7 @@ namespace API.Configuration
             services.AddScoped<IRequestHandler<RemoverEnderecoPessoaCommand, ValidationResult>, EnderecoPessoaCommandHandler>();
 
             //events
-            services.AddScoped<INotificationHandler<PessoaAdicionadaEvent>, PessoaEventHandler>();
-            services.AddScoped<INotificationHandler<PessoaAtualizadaEvent>, PessoaEventHandler>();
+            services.AddScoped<INotificationHandler<PessoaCadastrataEvent>, PessoaEventHandler>();
 
             //queries
             services.AddScoped<IPessoaQuery, PessoaQuery>();
