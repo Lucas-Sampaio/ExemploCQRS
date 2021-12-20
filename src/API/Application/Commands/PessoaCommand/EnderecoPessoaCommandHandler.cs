@@ -41,7 +41,7 @@ namespace API.Application.Commands.PessoaCommand
             _ = await _pessoaRepository.UnitOfWork.Commit();
 
             //evento sera publicado caso salve com sucesso
-            var pessoaEvent = new PessoaAtualizadaEvent(pessoa.Id);
+            var pessoaEvent = new PessoaCadastrataEvent(pessoa.Id);
             AdicionarEvento(pessoaEvent);
             await PublicarEventos();
 
@@ -67,7 +67,7 @@ namespace API.Application.Commands.PessoaCommand
             _ = await _pessoaRepository.UnitOfWork.Commit();
 
             //evento sera publicado caso salve com sucesso
-            var pessoaEvent = new PessoaAtualizadaEvent(pessoa.Id);
+            var pessoaEvent = new PessoaCadastrataEvent(pessoa.Id);
             AdicionarEvento(pessoaEvent);
             await PublicarEventos();
 
@@ -90,7 +90,7 @@ namespace API.Application.Commands.PessoaCommand
             _ = await _pessoaRepository.UnitOfWork.Commit();
 
             //evento sera publicado caso salve com sucesso
-            var pessoaEvent = new PessoaAtualizadaEvent(request.PessoaId);
+            var pessoaEvent = new PessoaCadastrataEvent(request.PessoaId);
             AdicionarEvento(pessoaEvent);
             await PublicarEventos();
 
