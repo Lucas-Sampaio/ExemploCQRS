@@ -24,7 +24,6 @@ namespace API.Application.Queries
         {
             cpf = cpf.ApenasNumeros();
             var pessoa = _pessoaRepository.ObterPorCPF(cpf);
-            var pessoaCosmo = await _cosmoRepository.ObterPorCPFAsync(cpf);
             var pessoaDto = _mapper.Map<PessoaDto>(pessoa);
             return pessoaDto;
         }
@@ -32,7 +31,6 @@ namespace API.Application.Queries
         public async Task<PessoaDto> ObterPorId(int id)
         {
             var pessoa = await _pessoaRepository.ObterPorIdAsync(id);
-            var pessoaCosmo = await _cosmoRepository.ObterPorIdAsync(id);
             var pessoaDto = _mapper.Map<PessoaDto>(pessoa);
             return pessoaDto;
         }
@@ -40,7 +38,6 @@ namespace API.Application.Queries
         public async Task<IEnumerable<PessoaDto>> ObterTodos()
         {
             var pessoas = await _pessoaRepository.ObterTodosAsync();
-            var pessoaCosmo = await _cosmoRepository.ObterTodosAsync();
             var pessoasDto = _mapper.Map<IEnumerable<PessoaDto>>(pessoas);
             return pessoasDto;
         }

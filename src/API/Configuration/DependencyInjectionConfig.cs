@@ -28,18 +28,15 @@ namespace API.Configuration
             services.AddScoped<IRequestHandler<AtualizarEnderecoPessoaCommand, ValidationResult>, EnderecoPessoaCommandHandler>();
             services.AddScoped<IRequestHandler<RemoverEnderecoPessoaCommand, ValidationResult>, EnderecoPessoaCommandHandler>();
 
-            //events
-            services.AddScoped<INotificationHandler<PessoaCadastradaIntegrationEvent>, PessoaEventHandler>();
-
             //queries
             services.AddScoped<IPessoaQuery, PessoaQuery>();
 
             //IOptions configs
-             services.Configure<MongoConfig>(options => configuration.GetSection(nameof(MongoConfig)).Bind(options));
+            services.Configure<MongoConfig>(options => configuration.GetSection(nameof(MongoConfig)).Bind(options));
 
             //repositorios
             services.AddScoped<IMongoDBContext, MongoDbContext>();
-    
+
             services.AddScoped<IPessoaRepository, PessoaRepository>();
             services.AddScoped<IPessoaMongoRepository, PessoaMongoRepository>();
         }
