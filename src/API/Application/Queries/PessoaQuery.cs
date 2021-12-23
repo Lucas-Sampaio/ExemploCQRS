@@ -10,34 +10,39 @@ namespace API.Application.Queries
     public class PessoaQuery : IPessoaQuery
     {
         private readonly IPessoaMongoRepository _pessoaRepository;
+        private readonly IPessoaCosmoRepository _cosmoRepository;
 
         private readonly IMapper _mapper;
-        public PessoaQuery(IPessoaMongoRepository pessoaRepository, IMapper mapper)
+        public PessoaQuery(IPessoaMongoRepository pessoaRepository,IPessoaCosmoRepository cosmoRepository ,IMapper mapper)
         {
             _pessoaRepository = pessoaRepository;
+            _cosmoRepository = cosmoRepository;
             _mapper = mapper;
         }
 
-        public Task<PessoaDto> ObterPorCPF(string cpf)
+        public async Task<PessoaDto> ObterPorCPF(string cpf)
         {
             cpf = cpf.ApenasNumeros();
             var pessoa = _pessoaRepository.ObterPorCPF(cpf);
+            var pessoaCosmo = await _cosmoRepository.ObterPorCPFAsync(cpf);
             var pessoaDto = _mapper.Map<PessoaDto>(pessoa);
-            return Task.FromResult(pessoaDto);
+            return pessoaDto;
         }
 
-        public Task<PessoaDto> ObterPorId(int id)
+        public async Task<PessoaDto> ObterPorId(int id)
         {
-            var pessoa = _pessoaRepository.ObterPorId(id);
+            var pessoa = await _pessoaRepository.ObterPorIdAsync(id);
+            var pessoaCosmo = await _cosmoRepository.ObterPorIdAsync(id);
             var pessoaDto = _mapper.Map<PessoaDto>(pessoa);
-            return Task.FromResult(pessoaDto);
+            return pessoaDto;
         }
 
-        public Task<IEnumerable<PessoaDto>> ObterTodos()
+        public async Task<IEnumerable<PessoaDto>> ObterTodos()
         {
-            var pessoas = _pessoaRepository.ObterTodos();
+            var pessoas = await _pessoaRepository.ObterTodosAsync();
+            var pessoaCosmo = await _cosmoRepository.ObterTodosAsync();
             var pessoasDto = _mapper.Map<IEnumerable<PessoaDto>>(pessoas);
-            return Task.FromResult(pessoasDto);
+            return pessoasDto;
         }
     }
 }
