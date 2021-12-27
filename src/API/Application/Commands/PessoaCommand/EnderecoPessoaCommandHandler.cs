@@ -5,6 +5,7 @@ using Core.Messages.Integration;
 using Domain.PessoaAggregate;
 using FluentValidation.Results;
 using MediatR;
+using MessageBus;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,11 +19,12 @@ namespace API.Application.Commands.PessoaCommand
     {
         private readonly IPessoaRepository _pessoaRepository;
         private readonly IMapper _mapper;
-
-        public EnderecoPessoaCommandHandler(IPessoaRepository pessoaRepository, IMediatorHandler mediatorHandler, IMapper mapper) : base(mediatorHandler)
+        private readonly IMessageBus _bus;
+        public EnderecoPessoaCommandHandler(IPessoaRepository pessoaRepository, IMessageBus bus, IMapper mapper) : base()
         {
             _pessoaRepository = pessoaRepository;
             _mapper = mapper;
+            _bus = bus;
         }
 
         public async Task<ValidationResult> Handle(AdicionarEnderecoPessoaCommand request, CancellationToken cancellationToken)
@@ -42,8 +44,7 @@ namespace API.Application.Commands.PessoaCommand
 
             //evento sera publicado caso salve com sucesso
             var pessoaEvent = new PessoaCadastradaIntegrationEvent(pessoa.Id);
-            AdicionarEvento(pessoaEvent);
-            await PublicarEventos();
+            await _bus.PublishAsync(pessoaEvent);
 
             return request.ValidationResult;
         }
@@ -68,8 +69,7 @@ namespace API.Application.Commands.PessoaCommand
 
             //evento sera publicado caso salve com sucesso
             var pessoaEvent = new PessoaCadastradaIntegrationEvent(pessoa.Id);
-            AdicionarEvento(pessoaEvent);
-            await PublicarEventos();
+            await _bus.PublishAsync(pessoaEvent);
 
             return request.ValidationResult;
         }
@@ -91,8 +91,7 @@ namespace API.Application.Commands.PessoaCommand
 
             //evento sera publicado caso salve com sucesso
             var pessoaEvent = new PessoaCadastradaIntegrationEvent(request.PessoaId);
-            AdicionarEvento(pessoaEvent);
-            await PublicarEventos();
+            await _bus.PublishAsync(pessoaEvent);
 
             return request.ValidationResult;
         }

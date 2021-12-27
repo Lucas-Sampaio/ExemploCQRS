@@ -3,6 +3,7 @@ using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Infrastructure.Repositories
 {
@@ -14,41 +15,41 @@ namespace Infrastructure.Repositories
         {
             _pessoas = mongoContext.GetCollection<PessoaDocument>(_pessoaCollection);
         }
-        public List<PessoaDocument> ObterTodos()
+        public async Task<List<PessoaDocument>> ObterTodosAsync()
         {
-            return _pessoas.Find(_ => true).ToList();
+            return await _pessoas.Find(_ => true).ToListAsync();
         }
-        public PessoaDocument ObterPorId(int id)
+        public async Task<PessoaDocument> ObterPorIdAsync(int id)
         {
-            return _pessoas.Find(pessoa => pessoa.Id == id).FirstOrDefault();
+            return await _pessoas.Find(pessoa => pessoa.Id == id).FirstOrDefaultAsync();
         }
         /// <summary>
         /// Adiciona uma pessoa caso não esteja no mongo ou atualiza ela caso tenha
         /// </summary>
         /// <param name="pessoa">pessoa a ser inserida/atualizada</param>
         /// <param name="id">id da pessoa</param>
-        public void AdicionarOuAtualizarPessoa(PessoaDocument pessoa)
+        public async Task AdicionarOuAtualizarAsync(PessoaDocument pessoa)
         {
             var id = pessoa.Id;
             if (id == 0)
                 throw new ArgumentNullException(nameof(id), "Id da pessoa não informada");
 
-            var pessoaDocument = ObterPorId(id);
+            var pessoaDocument = await ObterPorIdAsync(id);
             if (pessoaDocument == null)
-                Adicionar(pessoa);
+               await AdicionarAsync(pessoa);
             else
-                Atualizar(id, pessoa);
+               await AtualizarAsync(id, pessoa);
         }
-        private void Adicionar(PessoaDocument pessoa) => _pessoas.InsertOne(pessoa);
-        private void Atualizar(int id, PessoaDocument pessoa)
+        private Task AdicionarAsync(PessoaDocument pessoa) => _pessoas.InsertOneAsync(pessoa);
+        private Task AtualizarAsync(int id, PessoaDocument pessoa)
         {
             var filter = Builders<PessoaDocument>.Filter.Where(_ => _.Id == id);
-            _pessoas.ReplaceOne(filter, pessoa);
+            return _pessoas.ReplaceOneAsync(filter, pessoa);
         }
-        public void Remover(int id)
+        public async Task RemoverAsync(int id)
         {
             var filter = Builders<PessoaDocument>.Filter.Where(_ => _.Id == id);
-            var operation = _pessoas.DeleteOne(filter);
+           _= await _pessoas.DeleteOneAsync(filter);
         }
 
         public PessoaDocument ObterPorCPF(string cpf)

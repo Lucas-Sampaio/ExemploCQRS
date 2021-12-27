@@ -18,26 +18,26 @@ namespace API.Application.Queries
             _mapper = mapper;
         }
 
-        public Task<PessoaDto> ObterPorCPF(string cpf)
+        public async Task<PessoaDto> ObterPorCPF(string cpf)
         {
             cpf = cpf.ApenasNumeros();
             var pessoa = _pessoaRepository.ObterPorCPF(cpf);
             var pessoaDto = _mapper.Map<PessoaDto>(pessoa);
-            return Task.FromResult(pessoaDto);
+            return pessoaDto;
         }
 
-        public Task<PessoaDto> ObterPorId(int id)
+        public async Task<PessoaDto> ObterPorId(int id)
         {
-            var pessoa = _pessoaRepository.ObterPorId(id);
+            var pessoa = await _pessoaRepository.ObterPorIdAsync(id);
             var pessoaDto = _mapper.Map<PessoaDto>(pessoa);
-            return Task.FromResult(pessoaDto);
+            return pessoaDto;
         }
 
-        public Task<IEnumerable<PessoaDto>> ObterTodos()
+        public async Task<IEnumerable<PessoaDto>> ObterTodos()
         {
-            var pessoas = _pessoaRepository.ObterTodos();
+            var pessoas = await _pessoaRepository.ObterTodosAsync();
             var pessoasDto = _mapper.Map<IEnumerable<PessoaDto>>(pessoas);
-            return Task.FromResult(pessoasDto);
+            return pessoasDto;
         }
     }
 }

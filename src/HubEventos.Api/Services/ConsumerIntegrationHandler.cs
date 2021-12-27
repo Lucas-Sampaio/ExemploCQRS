@@ -29,12 +29,14 @@ namespace HubEventos.Api.Services
             _bus.SubscribeAsync<PessoaCadastradaIntegrationEvent>("PessoaCadastrada",
                 async request => await SalvarPessoa(request));
         }
-        private Task SalvarPessoa(PessoaCadastradaIntegrationEvent message)
+        private async Task SalvarPessoa(PessoaCadastradaIntegrationEvent message)
         {
+            //como o background service funciona somente com singleton
+            //precisa obter outros tipos de instancia dessa forma
             using var scope = _serviceProvider.CreateScope();
             var pessoaRepository = scope.ServiceProvider.GetRequiredService<IPessoaRepository>();
             var mongoRepository = scope.ServiceProvider.GetRequiredService<IPessoaMongoRepository>();
-
+          
             var pessoa = pessoaRepository.ObterPorId(message.PessoaId, "Enderecos");
             var pessoaDocument = new PessoaDocument
             {
@@ -53,8 +55,7 @@ namespace HubEventos.Api.Services
                     Id = x.Id
                 }).ToList()
             };
-            mongoRepository.AdicionarOuAtualizarPessoa(pessoaDocument);
-            return Task.CompletedTask;
+            await mongoRepository.AdicionarOuAtualizarAsync(pessoaDocument);
         }
     }
 }
