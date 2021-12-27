@@ -13,10 +13,9 @@ namespace API.Application.Queries
         private readonly IPessoaCosmoRepository _cosmoRepository;
 
         private readonly IMapper _mapper;
-        public PessoaQuery(IPessoaMongoRepository pessoaRepository,IPessoaCosmoRepository cosmoRepository ,IMapper mapper)
+        public PessoaQuery(IPessoaMongoRepository pessoaRepository, IMapper mapper)
         {
             _pessoaRepository = pessoaRepository;
-            _cosmoRepository = cosmoRepository;
             _mapper = mapper;
         }
 

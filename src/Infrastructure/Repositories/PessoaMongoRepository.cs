@@ -21,7 +21,7 @@ namespace Infrastructure.Repositories
         }
         public async Task<PessoaDocument> ObterPorIdAsync(int id)
         {
-            return await _pessoas.Find(pessoa => pessoa.Idtest == id).FirstOrDefaultAsync();
+            return await _pessoas.Find(pessoa => pessoa.Id == id).FirstOrDefaultAsync();
         }
         /// <summary>
         /// Adiciona uma pessoa caso não esteja no mongo ou atualiza ela caso tenha
@@ -30,7 +30,7 @@ namespace Infrastructure.Repositories
         /// <param name="id">id da pessoa</param>
         public async Task AdicionarOuAtualizarAsync(PessoaDocument pessoa)
         {
-            var id = pessoa.Idtest;
+            var id = pessoa.Id;
             if (id == 0)
                 throw new ArgumentNullException(nameof(id), "Id da pessoa não informada");
 
@@ -43,12 +43,12 @@ namespace Infrastructure.Repositories
         private Task AdicionarAsync(PessoaDocument pessoa) => _pessoas.InsertOneAsync(pessoa);
         private Task AtualizarAsync(int id, PessoaDocument pessoa)
         {
-            var filter = Builders<PessoaDocument>.Filter.Where(_ => _.Idtest == id);
+            var filter = Builders<PessoaDocument>.Filter.Where(_ => _.Id == id);
             return _pessoas.ReplaceOneAsync(filter, pessoa);
         }
         public async Task RemoverAsync(int id)
         {
-            var filter = Builders<PessoaDocument>.Filter.Where(_ => _.Idtest == id);
+            var filter = Builders<PessoaDocument>.Filter.Where(_ => _.Id == id);
            _= await _pessoas.DeleteOneAsync(filter);
         }
 
