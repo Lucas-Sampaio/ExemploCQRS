@@ -22,7 +22,7 @@ namespace API.Application.Commands.PessoaCommand
             {
                 RuleFor(x => x.Nome)
                     .MinimumLength(2).WithMessage("O nome precisa ter pelo menos 2 caracteres")
-                    .MaximumLength(150).WithMessage("O nome precisa só pode ter no máximo 150");
+                    .MaximumLength(150).WithMessage("O nome só pode ter no máximo 150");
 
                 RuleFor(x => x.DataNascimento)
                     .GreaterThan(DateTime.MinValue)

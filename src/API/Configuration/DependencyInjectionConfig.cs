@@ -33,12 +33,14 @@ namespace API.Configuration
 
             //IOptions configs
             services.Configure<MongoConfig>(options => configuration.GetSection(nameof(MongoConfig)).Bind(options));
+            //services.Configure<AzureCosmoConfig>(options => configuration.GetSection(nameof(AzureCosmoConfig)).Bind(options));
 
             //repositorios
             services.AddScoped<IMongoDBContext, MongoDbContext>();
 
             services.AddScoped<IPessoaRepository, PessoaRepository>();
             services.AddScoped<IPessoaMongoRepository, PessoaMongoRepository>();
+            //services.AddScoped<IPessoaCosmoRepository, PessoaCosmoRepository>();
         }
     }
 }
