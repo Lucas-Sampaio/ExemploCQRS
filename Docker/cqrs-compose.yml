@@ -55,6 +55,28 @@ services:
             - ELASTICSEARCH_URL=http://localhost:9200
         networks:
             - elastic
+    
+    logstash:    
+        container_name: cqrs-logstash
+        image: docker.elastic.co/logstash/logstash:7.17.0
+        volumes:
+            - type: bind
+              source: C:/Users/lucas.sampaio/source/repos/ExemploCQRS/Docker/logstash/pipeline
+              target: /usr/share/logstash/pipeline
+              read_only: true
+        ports:
+            - "5044:5044"
+            - "5000:5000/tcp"
+            - "5000:5000/udp"
+            - "9600:9600"
+        environment:
+            - ELASTICSEARCH_URL=http://localhost:9200
+            - xpack.monitoring.enabled=true
+            - "LS_JAVA_OPTS=-Xmx256m -Xms256m" #quantidade de memoria
+        networks:
+            - elastic
+        depends_on:
+            - elasticsearch
         
 networks:
     elastic:
