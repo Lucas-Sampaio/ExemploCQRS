@@ -8,7 +8,7 @@
 
 ### 🛠 Objetivo
 
-Demostrar o uso de cqrs,  o projeto é crud de pessoa básico onde ao salvar uma pessoa lançará um envento para salvar em um banco nosql
+Demostrar o uso de cqrs,  o projeto é um crud de pessoa básico onde ao salvar uma pessoa lançará um evento para salvar em um banco nosql
 ele esta separado em [QueryStack](https://github.com/Lucas-Sampaio/ExemploCQRS/tree/master/src/API/Application/Queries) onde tem uma classe que vai ser responsavel por trazer as
 consultas do banco mongodb
 e uma [CommandStack](https://github.com/Lucas-Sampaio/ExemploCQRS/tree/master/src/API/Application/Commands) que vai ser responsavel por fazer a escrita no banco sql server
